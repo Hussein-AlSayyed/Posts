@@ -12,8 +12,6 @@ import { mimeType } from './7.1 mime-type.validator'
   styleUrls: ["./post-create.component.css"]
 })
 export class PostCreateComponent implements OnInit {
-  enteredTitle = "";
-  enteredContent = "";
   private mode = 'create';
   private postId: string;
   post: Post;

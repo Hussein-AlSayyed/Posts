@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { MatButtonModule } from '@angular/material/button'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatExpansionModule } from '@angular/material/expansion'
+import { MatPaginatorModule } from '@angular/material/paginator'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -19,22 +20,23 @@ import { AppRoutingModule } from './app-routing.module';
 @NgModule({
   declarations: [
     AppComponent,
-    PostCreateComponent,
     HeaderComponent,
-    PostListComponent
+    PostListComponent,
+    PostCreateComponent,
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule,
-    MatInputModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
     MatCardModule,
+    MatInputModule,
     MatButtonModule,
     MatToolbarModule,
+    AppRoutingModule,
     MatExpansionModule,
-    MatProgressSpinnerModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
