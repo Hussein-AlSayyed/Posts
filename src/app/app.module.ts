@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card'
 import { HttpClientModule } from '@angular/common/http'
 import { MatInputModule } from '@angular/material/input'
@@ -26,7 +26,7 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     MatInputModule,
