@@ -25,6 +25,7 @@ export class PostsService {
                 content: post.content,
                 id: post._id,
                 imagePath: post.imagePath,
+                creator: post.creator,
               }
             }),
             maxPostsCount: postsData.maxPostsCount,
@@ -42,7 +43,7 @@ export class PostsService {
   }
 
   getPostById(postId: string) {
-    return this.http.get<{ _id: string, title: string, content: string, imagePath: string }>('http://localhost:3000/api/posts/' + postId);
+    return this.http.get<{ _id: string, title: string, content: string, imagePath: string, creator: string }>('http://localhost:3000/api/posts/' + postId);
   }
 
   addPost(title: string, content: string, image: File) {
@@ -66,7 +67,7 @@ export class PostsService {
       postData.append('content', content);
       postData.append('image', image, title);
     } else {
-      postData = { id: postId, title: title, content: content, imagePath: image };
+      postData = { id: postId, title: title, content: content, imagePath: image, creator: null };
     }
     this.http.put<{ message: string }>('http://localhost:3000/api/posts/' + postId, postData)
       .subscribe(() => {

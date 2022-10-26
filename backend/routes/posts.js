@@ -38,6 +38,7 @@ router.post(
             title: req.body.title,
             content: req.body.content,
             imagePath: url + '/images/' + req.file.filename,
+            creator: req.userData.userId
         });
         post.save().then((createdPost) => {
             res.status(201).json({
@@ -47,6 +48,7 @@ router.post(
                     title: createdPost.title,
                     content: createdPost.content,
                     imagePath: createdPost.imagePath,
+                    creator: createdPost.userId,
                 }
             });
         });
@@ -110,26 +112,40 @@ router.put(
             title: req.body.title,
             content: req.body.content,
             imagePath: imagePath,
+            creator: req.userData.userId,
         });
-        Post.updateOne({ _id: req.params.id }, post)
-            .then(() => {
-                res.status(200).json({
-                    message: "Updated Succesfully"
-                })
+        Post.updateOne({ _id: req.params.id, creator: req.userData.userId }, post)
+            .then((result) => {
+                if (result.modifiedCount > 0) {
+                    res.status(200).json({
+                        message: "Updated Successfully"
+                    });
+                } else {
+                    res.status(401).json({
+                        message: "Not Authorized",
+                    });
+                }
             })
-    })
+    });
 
 router.delete(
     "/:id",
     checkAuth,
     (req, res, next) => {
         Post.deleteOne({
-            _id: req.params.id
+            _id: req.params.id,
+            creator: req.userData.userId,
         })
-            .then(() => {
-                res.status(200).json({
-                    message: "Post Deleted",
-                });
+            .then((result) => {
+                if (result.deletedCount > 0) {
+                    res.status(200).json({
+                        message: "Post Deleted",
+                    });
+                } else {
+                    res.status(401).json({
+                        message: "Not Authorized",
+                    });
+                }
             })
     });
 

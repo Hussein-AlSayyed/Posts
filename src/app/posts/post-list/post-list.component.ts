@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
-import { PageEvent } from "@angular/material/paginator";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 
 import { Post } from "../post.model";
 import { PostsService } from "../posts.service";
@@ -24,10 +24,13 @@ export class PostListComponent implements OnInit, OnDestroy {
   pageSizeOptions = [1, 2, 5, 10];
   userIsAuthenticated = false;
   private authListnerSubs: Subscription;
+  userId: string;
+  @ViewChild('postsPaginator') postsPaginator: MatPaginator;
 
 
   ngOnInit() {
     this.isLoading = true;
+    this.userId = this.authService.getUserId();
     this.postsService.getPosts(this.postsPerPage, this.currentPage);
     this.postsSub = this.postsService.getPostUpdateListener()
       .subscribe((postsData: { posts: Post[], maxPostsCount: number }) => {
@@ -38,6 +41,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.authListnerSubs = this.authService.getAuthStatusListner()
       .subscribe(isAthenticated => {
         this.userIsAuthenticated = isAthenticated;
+        this.userId = this.authService.getUserId();
       })
   }
 
@@ -55,6 +59,10 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   onDelete(id: string) {
     this.isLoading = true;
+    if (this.posts.length === 1) {
+      this.currentPage = this.currentPage - 1;
+      this.postsPaginator.pageIndex = this.currentPage - 1;
+    }
     this.postsService.deletePost(id).subscribe(() => {
       this.postsService.getPosts(this.postsPerPage, this.currentPage);
     });
