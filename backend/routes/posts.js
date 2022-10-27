@@ -40,18 +40,24 @@ router.post(
             imagePath: url + '/images/' + req.file.filename,
             creator: req.userData.userId
         });
-        post.save().then((createdPost) => {
-            res.status(201).json({
-                message: 'Post added successfully',
-                post: {
-                    id: createdPost._id,
-                    title: createdPost.title,
-                    content: createdPost.content,
-                    imagePath: createdPost.imagePath,
-                    creator: createdPost.userId,
-                }
+        post.save()
+            .then((createdPost) => {
+                res.status(201).json({
+                    message: 'Post added successfully',
+                    post: {
+                        id: createdPost._id,
+                        title: createdPost.title,
+                        content: createdPost.content,
+                        imagePath: createdPost.imagePath,
+                        creator: createdPost.userId,
+                    }
+                });
+            })
+            .catch(error => {
+                res.status(500).json({
+                    message: 'Creating the post failed!',
+                });
             });
-        });
     });
 
 router.get(
@@ -78,6 +84,11 @@ router.get(
                     maxPostsCount: maxPostsCount,
                 });
             })
+            .catch(error => {
+                res.status(500).json({
+                    message: 'Fetching posts failed!',
+                });
+            })
     });
 
 router.get(
@@ -94,7 +105,11 @@ router.get(
                         })
                     }
                 }
-            )
+            ).catch(error => {
+                res.status(500).json({
+                    message: 'Fetching post failed!',
+                });
+            })
     })
 
 router.put(
@@ -122,9 +137,14 @@ router.put(
                     });
                 } else {
                     res.status(401).json({
-                        message: "Not Authorized",
+                        message: "Not authorized",
                     });
                 }
+            })
+            .catch(error => {
+                res.status(500).json({
+                    message: 'Could not update post!',
+                });
             })
     });
 
@@ -139,13 +159,18 @@ router.delete(
             .then((result) => {
                 if (result.deletedCount > 0) {
                     res.status(200).json({
-                        message: "Post Deleted",
+                        message: "Post deleted",
                     });
                 } else {
                     res.status(401).json({
-                        message: "Not Authorized",
+                        message: "Not authorized",
                     });
                 }
+            })
+            .catch(error => {
+                res.status(500).json({
+                    message: 'could not delete post!',
+                });
             })
     });
 
