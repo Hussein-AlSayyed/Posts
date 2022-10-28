@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 module.exports = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'This_Secret_Validation_Key_Should_Be_Longer');
+        const decodedToken = jwt.verify(token, process.env.JWB_KEY);
         req.userData = { email: decodedToken.email, userId: decodedToken.userId };
         next();
     } catch (error) {

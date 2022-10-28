@@ -1,0 +1,6 @@
+{
+    "env": {
+        "MONGODB_ATLAS_PW": "ahv2RYlOoBV9lNbC",
+        "JWB_KEY": "This_Secret_Validation_Key_Should_Be_Longer"
+    }
+}
