@@ -33,7 +33,7 @@ export class AuthService {
         const authData: AuthData = { email: email, password: password };
         this.http.post(BACKEND_URL + 'signup', authData)
             .subscribe({
-                next: response => {
+                next: () => {
                     this.router.navigate(['/']);
                 },
                 error: () => {

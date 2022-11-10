@@ -13,7 +13,6 @@ exports.createUser = (req, res, next) => {
                 .then(result => {
                     res.status(201).json({
                         message: 'User created',
-                        result: result,
                     });
                 }).catch(error => {
                     res.status(500).json({
@@ -30,18 +29,14 @@ exports.userLogin = (req, res, next) => {
     })
         .then(user => {
             if (!user) {
-                return res.status(401).json({
-                    message: 'Authentication Failed',
-                });
+                throw new Error('Invalid authentication credentials!');
             }
             fetchedUser = user;
             return bcrypt.compare(req.body.password, user.password);
         })
         .then(result => {
             if (!result) {
-                return res.status(401).json({
-                    message: 'Authentication Failed',
-                });
+                throw new Error('Authentication failed!')
             }
             const token = jwt.sign(
                 { email: fetchedUser.email, userId: fetchedUser._id, },
@@ -56,7 +51,7 @@ exports.userLogin = (req, res, next) => {
         })
         .catch(error => {
             return res.status(401).json({
-                message: 'Invalid authentication credentials!',
+                message: error.message,
             });
         });
 }
