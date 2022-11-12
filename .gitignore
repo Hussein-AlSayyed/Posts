@@ -40,3 +40,9 @@ Thumbs.db
 # Uploaded Images On Backend
 backend/images/*.png
 backend/images/*.jpg
+
+# Nodemon file
+nodemon.json
+
+# App file in the backend folder
+backend/app.js
