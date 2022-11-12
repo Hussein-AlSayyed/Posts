@@ -111,6 +111,7 @@ In order to run this project locally, simply fork and clone the repository or do
     ```
 - Open a terminal then write "ng serve" without the double quotations then press enter.
 - Open a second terminal and write "npm run start:server" without the double quotations then press enter.
+    Wait few seconds then observe. If ``Connected Successfully`` was emitted, do the next bullet point. If ``Connection Failed`` was emitted, then you need to go your mongodb project, and re-add your current IP address to the Access List. On the left, press ``Network Access`` and edit the present one then add your current IP address and press ``Confirm``. This should solve the problem. Return to the terminal and terminate the process then re-run the command.
 - In your browser, type the following then press enter:
     ```
     http://localhost:4200
